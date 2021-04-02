@@ -194,7 +194,9 @@ class Gesto extends EventEmitter<GestoEvents> {
         const isDragStart = !this.flag;
 
         if (isDragStart) {
-            const activeElement = document.activeElement as HTMLElement;
+            const iframe =  document.querySelector("iframe[px-code-frame]") as HTMLIFrameElement;
+            const contentDocument = iframe.contentDocument;
+            const activeElement = contentDocument!.activeElement as HTMLElement;
             const target = e.target as HTMLElement;
             const tagName = target.tagName.toLowerCase();
             const hasInput = INPUT_TAGNAMES.indexOf(tagName) > -1;
