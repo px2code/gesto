@@ -676,12 +676,16 @@ version: 1.3.0
 
       function Gesto(targets, options) {
         if (options === void 0) {
-          options = {};
+          options = {
+            iframeSelector: "iframe[px-code-frame]"
+          };
         }
 
         var _this = _super.call(this) || this;
 
-        _this.options = {};
+        _this.options = {
+          iframeSelector: "iframe[px-code-frame]"
+        };
         _this.flag = false;
         _this.pinchFlag = false;
         _this.datas = {};
@@ -708,12 +712,13 @@ version: 1.3.0
               pinchOutside = _a.pinchOutside,
               preventRightClick = _a.preventRightClick,
               preventDefault = _a.preventDefault,
-              checkInput = _a.checkInput;
+              checkInput = _a.checkInput,
+              iframeSelector = _a.iframeSelector;
           var isTouch = _this.isTouch;
           var isDragStart = !_this.flag;
 
           if (isDragStart) {
-            var iframe = document.querySelector("iframe[px-code-frame]");
+            var iframe = document.querySelector(iframeSelector);
             var contentDocument = iframe.contentDocument;
             var activeElement = contentDocument.activeElement;
             var target = e.target;

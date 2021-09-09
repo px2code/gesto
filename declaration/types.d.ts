@@ -68,6 +68,7 @@ export interface GestoOptions {
     pinchOutside?: boolean;
     checkInput?: boolean;
     checkWindowBlur?: boolean;
+    iframeSelector: string;
 }
 export declare type GestoEvents = {
     "dragStart": OnDragStart;

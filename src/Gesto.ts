@@ -11,7 +11,7 @@ const INPUT_TAGNAMES = ["textarea", "input"];
  * You can set up drag, pinch events in any browser.
  */
 class Gesto extends EventEmitter<GestoEvents> {
-    public options: GestoOptions = {};
+    public options: GestoOptions = { iframeSelector: "iframe[px-code-frame]" };
     private flag = false;
     private pinchFlag = false;
     private datas: IObject<any> = {};
@@ -27,7 +27,7 @@ class Gesto extends EventEmitter<GestoEvents> {
     /**
      *
      */
-    constructor(targets: Array<Element | Window> | Element | Window, options: GestoOptions = {}) {
+    constructor(targets: Array<Element | Window> | Element | Window, options: GestoOptions = { iframeSelector: "iframe[px-code-frame]" }) {
         super();
         const elements = [].concat(targets as any) as Array<Element | Window>;
         this.options = {
@@ -189,12 +189,12 @@ class Gesto extends EventEmitter<GestoEvents> {
         if (!this.flag && e.cancelable === false) {
             return;
         }
-        const { container, pinchOutside, preventRightClick, preventDefault, checkInput } = this.options;
+        const { container, pinchOutside, preventRightClick, preventDefault, checkInput, iframeSelector } = this.options;
         const isTouch = this.isTouch;
         const isDragStart = !this.flag;
 
         if (isDragStart) {
-            const iframe =  document.querySelector("iframe[px-code-frame]") as HTMLIFrameElement;
+            const iframe =  document.querySelector(iframeSelector) as HTMLIFrameElement;
             const contentDocument = iframe.contentDocument;
             const activeElement = contentDocument!.activeElement as HTMLElement;
             const target = e.target as HTMLElement;
