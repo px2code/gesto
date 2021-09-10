@@ -677,14 +677,14 @@ version: 1.3.0
       function Gesto(targets, options) {
         if (options === void 0) {
           options = {
-            iframeSelector: "iframe[px-code-frame]"
+            iframeSelector: ""
           };
         }
 
         var _this = _super.call(this) || this;
 
         _this.options = {
-          iframeSelector: "iframe[px-code-frame]"
+          iframeSelector: ""
         };
         _this.flag = false;
         _this.pinchFlag = false;

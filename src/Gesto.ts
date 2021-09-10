@@ -11,7 +11,7 @@ const INPUT_TAGNAMES = ["textarea", "input"];
  * You can set up drag, pinch events in any browser.
  */
 class Gesto extends EventEmitter<GestoEvents> {
-    public options: GestoOptions = { iframeSelector: "iframe[px-code-frame]" };
+    public options: GestoOptions = { iframeSelector: "" };
     private flag = false;
     private pinchFlag = false;
     private datas: IObject<any> = {};
@@ -27,7 +27,7 @@ class Gesto extends EventEmitter<GestoEvents> {
     /**
      *
      */
-    constructor(targets: Array<Element | Window> | Element | Window, options: GestoOptions = { iframeSelector: "iframe[px-code-frame]" }) {
+    constructor(targets: Array<Element | Window> | Element | Window, options: GestoOptions = { iframeSelector: "" }) {
         super();
         const elements = [].concat(targets as any) as Array<Element | Window>;
         this.options = {

@@ -280,14 +280,14 @@ function (_super) {
   function Gesto(targets, options) {
     if (options === void 0) {
       options = {
-        iframeSelector: "iframe[px-code-frame]"
+        iframeSelector: ""
       };
     }
 
     var _this = _super.call(this) || this;
 
     _this.options = {
-      iframeSelector: "iframe[px-code-frame]"
+      iframeSelector: ""
     };
     _this.flag = false;
     _this.pinchFlag = false;
