@@ -1,4 +1,4 @@
-import { Client, OnDrag, GestoOptions, GestoEvents } from "./types";
+import { Client, GestoEvents, GestoOptions, OnDrag } from "./types";
 import EventEmitter, { TargetParam } from "@scena/event-emitter";
 import { IObject } from "@daybrush/utils";
 declare class Gesto extends EventEmitter<GestoEvents> {

@@ -182,6 +182,28 @@ version: 1.3.0
 
     var OBJECT = "object";
     /**
+    * get string "undefined"
+    * @memberof Consts
+    * @example
+    import {UNDEFINED} from "@daybrush/utils";
+
+    console.log(UNDEFINED); // "undefined"
+    */
+
+    var UNDEFINED = "undefined";
+    /**
+    * Check whether the environment is window or node.js.
+    * @memberof Consts
+    * @name document
+    * @example
+    import {IS_WINDOW} from "@daybrush/utils";
+
+    console.log(IS_WINDOW); // false in node.js
+    console.log(IS_WINDOW); // true in browser
+    */
+
+    var doc = typeof document !== UNDEFINED && document; // FIXME: this type maybe false
+    /**
     * Check the type that the value is object.
     * @memberof Utils
     * @param {string} value - Value to check the type
@@ -718,8 +740,8 @@ version: 1.3.0
           var isDragStart = !_this.flag;
 
           if (isDragStart) {
-            var iframe = document.querySelector(iframeSelector);
-            var contentDocument = iframe.contentDocument;
+            var iframe = iframeSelector ? doc.querySelector(iframeSelector) : null;
+            var contentDocument = iframe ? iframe.contentDocument : doc;
             var activeElement = contentDocument.activeElement;
             var target = e.target;
             var tagName = target.tagName.toLowerCase();
@@ -945,8 +967,8 @@ version: 1.3.0
         return this.pinchFlag;
       };
       /**
-      * Whether to start double click
-      */
+       * Whether to start double click
+       */
 
 
       __proto.isDoubleFlag = function () {

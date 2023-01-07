@@ -1,12 +1,11 @@
-import { Client, OnDrag, GestoOptions, GestoEvents } from "./types";
-import {
-    getEventClients, isMultiTouch,
-} from "./utils";
+import { Client, GestoEvents, GestoOptions, OnDrag } from "./types";
+import { getEventClients, isMultiTouch, } from "./utils";
 import EventEmitter, { TargetParam } from "@scena/event-emitter";
-import { addEvent, removeEvent, now, IObject } from "@daybrush/utils";
+import { addEvent, document, IObject, now, removeEvent } from "@daybrush/utils";
 import { ClientStore } from "./ClientStore";
 
 const INPUT_TAGNAMES = ["textarea", "input"];
+
 /**
  * You can set up drag, pinch events in any browser.
  */
@@ -70,38 +69,44 @@ class Gesto extends EventEmitter<GestoEvents> {
             addEvent(container!, "touchcancel", this.onDragEnd, passive);
         }
     }
+
     /**
      * The total moved distance
      */
     public getMovement(clients?: Client[]) {
         return this.getCurrentStore().getMovement(clients) + this.clientStores.slice(1).reduce((prev, cur) => {
             return prev + cur.movement;
-        },  0);
+        }, 0);
     }
+
     /**
      * Whether to drag
      */
     public isDragging(): boolean {
         return this.isDrag;
     }
+
     /**
      * Whether to start drag
      */
     public isFlag(): boolean {
         return this.flag;
     }
+
     /**
      * Whether to start pinch
      */
     public isPinchFlag() {
         return this.pinchFlag;
     }
-        /**
+
+    /**
      * Whether to start double click
      */
     public isDoubleFlag() {
         return this.doubleFlag;
     }
+
     /**
      * Whether to pinch
      */
@@ -119,6 +124,7 @@ class Gesto extends EventEmitter<GestoEvents> {
         this.clientStores[0].move(deltaX, deltaY);
         isCallDrag && this.onDrag(e, true);
     }
+
     /**
      * Create a virtual drag event.
      */
@@ -135,12 +141,14 @@ class Gesto extends EventEmitter<GestoEvents> {
             };
         }), inputEvent, true);
     }
+
     /**
      * The dragStart event is triggered by an external event.
      */
     public triggerDragStart(e: any) {
         this.onDragStart(e, false);
     }
+
     /**
      * Set the event data while dragging.
      */
@@ -152,12 +160,14 @@ class Gesto extends EventEmitter<GestoEvents> {
         }
         return this;
     }
+
     /**
      * Set the event data while dragging.
      */
     public getEventDatas() {
         return this.datas;
     }
+
     /**
      * Unset Gesto
      */
@@ -185,17 +195,25 @@ class Gesto extends EventEmitter<GestoEvents> {
             removeEvent(container, "touchcancel", this.onDragEnd);
         }
     }
+
     public onDragStart = (e: any, isTrusted = true) => {
         if (!this.flag && e.cancelable === false) {
             return;
         }
-        const { container, pinchOutside, preventRightClick, preventDefault, checkInput, iframeSelector } = this.options;
+        const {
+            container,
+            pinchOutside,
+            preventRightClick,
+            preventDefault,
+            checkInput,
+            iframeSelector
+        } = this.options;
         const isTouch = this.isTouch;
         const isDragStart = !this.flag;
 
         if (isDragStart) {
-            const iframe =  document.querySelector(iframeSelector) as HTMLIFrameElement;
-            const contentDocument = iframe.contentDocument;
+            const iframe = iframeSelector ? document.querySelector(iframeSelector) as HTMLIFrameElement : null;
+            const contentDocument = iframe ? iframe.contentDocument : document;
             const activeElement = contentDocument!.activeElement as HTMLElement;
             const target = e.target as HTMLElement;
             const tagName = target.tagName.toLowerCase();
@@ -318,6 +336,7 @@ class Gesto extends EventEmitter<GestoEvents> {
         }
         this.clientStores = [];
     }
+
     public onPinchStart(e: TouchEvent) {
         const { pinchThreshold } = this.options;
 
@@ -341,6 +360,7 @@ class Gesto extends EventEmitter<GestoEvents> {
             this.pinchFlag = false;
         }
     }
+
     public onPinch(e: TouchEvent, clients: Client[]) {
         if (!this.flag || !this.pinchFlag || clients.length < 2) {
             return;
@@ -361,6 +381,7 @@ class Gesto extends EventEmitter<GestoEvents> {
             inputEvent: e,
         });
     }
+
     public onPinchEnd(e: TouchEvent) {
         if (!this.pinchFlag) {
             return;
@@ -388,9 +409,11 @@ class Gesto extends EventEmitter<GestoEvents> {
         this.prevTime = 0;
         this.flag = false;
     }
+
     private getCurrentStore() {
         return this.clientStores[0];
     }
+
     private moveClients(clients: Client[], inputEvent: any, isAdd: boolean): TargetParam<OnDrag> {
         const store = this.getCurrentStore();
         const position = store[isAdd ? "addClients" : "getPosition"](clients);
@@ -407,6 +430,7 @@ class Gesto extends EventEmitter<GestoEvents> {
             inputEvent,
         };
     }
+
     private onBlur = () => {
         this.onDragEnd();
     }

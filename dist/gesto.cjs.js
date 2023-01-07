@@ -323,8 +323,8 @@ function (_super) {
       var isDragStart = !_this.flag;
 
       if (isDragStart) {
-        var iframe = document.querySelector(iframeSelector);
-        var contentDocument = iframe.contentDocument;
+        var iframe = iframeSelector ? utils.document.querySelector(iframeSelector) : null;
+        var contentDocument = iframe ? iframe.contentDocument : utils.document;
         var activeElement = contentDocument.activeElement;
         var target = e.target;
         var tagName = target.tagName.toLowerCase();
@@ -550,8 +550,8 @@ function (_super) {
     return this.pinchFlag;
   };
   /**
-  * Whether to start double click
-  */
+   * Whether to start double click
+   */
 
 
   __proto.isDoubleFlag = function () {

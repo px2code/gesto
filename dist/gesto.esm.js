@@ -7,7 +7,7 @@ repository: git+https://github.com/daybrush/gesture.git
 version: 1.3.0
 */
 import EventEmitter from '@scena/event-emitter';
-import { removeEvent, now, addEvent } from '@daybrush/utils';
+import { removeEvent, document, now, addEvent } from '@daybrush/utils';
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -321,8 +321,8 @@ function (_super) {
       var isDragStart = !_this.flag;
 
       if (isDragStart) {
-        var iframe = document.querySelector(iframeSelector);
-        var contentDocument = iframe.contentDocument;
+        var iframe = iframeSelector ? document.querySelector(iframeSelector) : null;
+        var contentDocument = iframe ? iframe.contentDocument : document;
         var activeElement = contentDocument.activeElement;
         var target = e.target;
         var tagName = target.tagName.toLowerCase();
@@ -548,8 +548,8 @@ function (_super) {
     return this.pinchFlag;
   };
   /**
-  * Whether to start double click
-  */
+   * Whether to start double click
+   */
 
 
   __proto.isDoubleFlag = function () {
